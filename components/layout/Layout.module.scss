@@ -1,0 +1,10 @@
+.background {
+	margin: 0 auto;
+	border-right: 38px solid transparent;
+	border-left: 38px solid transparent;
+	padding: 38px 30px 68px;
+	min-height: calc(100vh - 341px);
+	width: 1204px;
+	max-width: 100%;
+	background-color: rgba($color: #0b0a18, $alpha: 0.95);
+}

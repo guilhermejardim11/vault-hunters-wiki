@@ -1,0 +1,11 @@
+.mob_details {
+	display: grid;
+	align-items: center;
+	grid-template-columns: 28px auto;
+	gap: 12px;
+
+	img {
+		height: 28px;
+		width: 28px;
+	}
+}

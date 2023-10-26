@@ -1,0 +1,18 @@
+.btn {
+	padding: 9px 28px 7px;
+	color: #0b0a18 !important;
+	background-image: linear-gradient(#f8b11b, #f38d23);
+
+	&:hover {
+		background-image: linear-gradient(#ffdc42, #f8b91b);
+	}
+}
+
+.btn__alt {
+	color: #ffffff !important;
+	background-image: linear-gradient(#6e6ba2, #45488d);
+
+	&:hover {
+		background-image: linear-gradient(#908cd5, #5c60c3);
+	}
+}

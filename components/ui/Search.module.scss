@@ -1,0 +1,17 @@
+.search {
+	position: relative;
+}
+
+.img {
+	position: absolute;
+	top: 12px;
+	left: 14px;
+	pointer-events: none;
+}
+
+.input {
+	padding: 2px 20px 0 38px;
+	border: 2px solid #6d6ba2;
+	height: 39px;
+	width: 100%;
+}

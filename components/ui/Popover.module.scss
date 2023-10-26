@@ -1,0 +1,29 @@
+.popover_wrapper {
+	display: inline-flex;
+	position: relative;
+}
+
+.popover {
+	box-shadow: 2px 0 8px 10px rgba($color: #0b0a18, $alpha: 0.8);
+	position: absolute;
+	top: 0;
+	left: 50%;
+	padding: 6px 12px 5px;
+	font-size: 15px;
+	text-align: center;
+	white-space: nowrap;
+	color: #ffffff;
+	background-image: linear-gradient(#6e6ba2, #45488d);
+	transform: translate(-50%, calc(-100% + 6px));
+	z-index: 8;
+	opacity: 0;
+	visibility: hidden;
+	transition: all 0.3s cubic-bezier(0.75, -0.02, 0.2, 0.97);
+	pointer-events: none;
+}
+
+.popover_wrapper:hover .popover {
+	opacity: 1;
+	visibility: visible;
+	transform: translate(-50%, calc(-100% - 10px));
+}

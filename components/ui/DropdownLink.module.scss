@@ -1,0 +1,27 @@
+.dropdown {
+	position: relative;
+
+	&:hover .dropdown__content {
+		opacity: 1;
+		visibility: visible;
+		transform: translate(-50%, 0);
+	}
+}
+
+.dropdown__content {
+	padding: 9px 0;
+	box-shadow: 2px 0 8px 10px rgba($color: #0b0a18, $alpha: 0.8);
+	border: 2px solid #1f1e39;
+	position: absolute;
+	left: 50%;
+	background-color: rgba($color: #0b0a18, $alpha: 0.99);
+	transform: translate(-50%, -6px);
+	z-index: 9;
+	opacity: 0;
+	visibility: hidden;
+	transition: all 0.3s cubic-bezier(0.75, -0.02, 0.2, 0.97);
+
+	a {
+		padding: 9px 28px 7px;
+	}
+}
