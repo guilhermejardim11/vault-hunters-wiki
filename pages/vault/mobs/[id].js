@@ -1,145 +1,126 @@
-import scavenger_mob_purple from '../../../assets/icons/items/scavenger/scavenger_mob_purple.png';
-import vault_fighter from '../../../assets/icons/mobs/vault_fighter.png';
-import vault_fighter_1 from '../../../assets/icons/mobs/vault_fighter_1.png';
-import vault_fighter_2 from '../../../assets/icons/mobs/vault_fighter_2.png';
-import vault_fighter_3 from '../../../assets/icons/mobs/vault_fighter_3.png';
-import vault_fighter_4 from '../../../assets/icons/mobs/vault_fighter_4.png';
+import { useEffect, useState } from 'react';
+import { useRouter } from 'next/router';
 
 import MobDetailsGrid from '../../../components/details/mob/MobDetailsGrid';
 import PageTitle from '../../../components/page/PageTitle';
-import Card from '../../../components/ui/card/Card';
 import ColumnGroup from '../../../components/ui/card/ColumnGroup';
-import CardValue from '../../../components/ui/card/CardValue';
-import LabeledCard from '../../../components/ui/card/LabeledCard';
-import PixelImg from '../../../components/ui/PixelImg';
-import Popover from '../../../components/ui/Popover';
-import PageContent from '../../../components/layout/PageContent';
+import PageContent from '../../../components/page/PageContent';
+import ScavDropCard from '../../../components/mobs/ScavDropCard';
+import SoulChardCard from '../../../components/mobs/SoulChardCard';
+import MobVariants from '../../../components/mobs/MobVariants';
+import XPCard from '../../../components/mobs/XPCard';
+import SpawnCard from '../../../components/mobs/SpawnCard';
 
 const MobDetailsPage = () => {
+	const router = useRouter();
+
+	const [mobDetails, setMobDetails] = useState({
+		name: '',
+		xp: '',
+		spawn: '',
+		desc: '',
+		icon: '',
+		scav_drop: '',
+		soul_shards: {
+			amount: '',
+			odds: '',
+		},
+		variants: [],
+		tiers: [],
+		special: [],
+	});
+	const [isLoading, setIsLoading] = useState(true);
+
+	useEffect(() => {
+		if (!router.query.id) {
+			return;
+		}
+
+		const fetchMob = async () => {
+			setIsLoading(true);
+
+			try {
+				const response = await fetch(`https://vault-hunters-wiki-default-rtdb.firebaseio.com/mobs/${router.query.id}.json`);
+				const data = await response.json();
+
+				if (!response.ok) {
+					throw new Error({ message: 'Error' });
+				}
+
+				setMobDetails((prevState) => ({
+					name: data.name && data.name,
+					xp: data.xp && data.xp,
+					spawn: data.spawn && data.spawn,
+					desc: data.desc && data.desc,
+					icon: data.icon && data.icon,
+					scav_drop: data.scav_drop && data.scav_drop,
+					soul_shards: {
+						amount: data.soul_shards?.amount,
+						odds: data.soul_shards?.odds,
+					},
+					variants: data.variants && data.variants,
+					tiers: data.tiers && data.tiers,
+					special: data.special && data.special,
+				}));
+			} catch (error) {
+				// setError(error.message);
+			}
+
+			setIsLoading(false);
+		};
+
+		fetchMob();
+	}, [router.query.id]);
+
 	return (
-		<>
-			<PageTitle>Vault Fighter</PageTitle>
+		!isLoading && (
+			<>
+				<PageTitle>{mobDetails.name}</PageTitle>
 
-			<div>
-				<p>The Vault Fighter is a common mob in the Vaults.</p>
-
-				<MobDetailsGrid
-					damage='1-3'
-					critical_chance='20%'
-					max_health='2-20'
-					critical_mult='2-20'
-					speed='2-20'
-					knockback_resistance='2-20'
-				/>
-
-				<ColumnGroup>
-					<Card>
-						<p>Scavenger Drop</p>
-
-						<Popover label='Purple Essence'>
-							<PixelImg
-								src={scavenger_mob_purple.src}
-								alt='Purple Essence'
-							/>
-						</Popover>
-					</Card>
-
-					<Card>
-						<p>Soul Shards Drop</p>
-
-						<CardValue
-							label='Amount'
-							value='1'
-						/>
-						<CardValue
-							label='Odds'
-							value='300%'
-						/>
-					</Card>
-				</ColumnGroup>
-			</div>
-
-			<PageContent>
 				<div>
-					<h2>Tiers</h2>
+					<p>{mobDetails.desc}</p>
+
+					{/* <MobDetailsGrid
+						damage='1-3'
+						critical_chance='20%'
+						max_health='2-20'
+						critical_mult='2-20'
+						speed='2-20'
+						knockback_resistance='2-20'
+					/> */}
 
 					<ColumnGroup>
-						<LabeledCard label='Tier 1'>
-							<PixelImg
-								src={vault_fighter.src}
-								alt='Vault Fighter'
-							/>
-							<CardValue
-								label='Spawn'
-								value='lvl 0+'
-							/>
-							<CardValue
-								label='Experience Drop'
-								value='16xp'
-							/>
-						</LabeledCard>
-
-						<LabeledCard label='Tier 2'>
-							<PixelImg
-								src={vault_fighter_1.src}
-								alt='Vault Fighter T2'
-							/>
-							<CardValue
-								label='Spawn'
-								value='lvl 20+'
-							/>
-							<CardValue
-								label='Experience Drop'
-								value='24xp'
-							/>
-						</LabeledCard>
-
-						<LabeledCard label='Tier 3'>
-							<PixelImg
-								src={vault_fighter_2.src}
-								alt='Vault Fighter T3'
-							/>
-							<CardValue
-								label='Spawn'
-								value='lvl 50+'
-							/>
-							<CardValue
-								label='Experience Drop'
-								value='42xp'
-							/>
-						</LabeledCard>
-
-						<LabeledCard label='Tier 4'>
-							<PixelImg
-								src={vault_fighter_3.src}
-								alt='Vault Fighter T4'
-							/>
-							<CardValue
-								label='Spawn'
-								value='lvl 65+'
-							/>
-							<CardValue
-								label='Experience Drop'
-								value='60xp'
-							/>
-						</LabeledCard>
+						{mobDetails.scav_drop && <ScavDropCard essence={mobDetails.scav_drop} />}
+						{mobDetails.spawn && <SpawnCard spawn={mobDetails.spawn} />}
+						{mobDetails.xp && <XPCard xp={mobDetails.xp} />}
+						{mobDetails.soul_shards.amount && <SoulChardCard soul_shards={mobDetails.soul_shards} />}
 					</ColumnGroup>
 				</div>
 
-				<div>
-					<h2>Special Traits</h2>
+				<PageContent>
+					{mobDetails.variants?.length && (
+						<MobVariants
+							title='Variants'
+							list={mobDetails.variants}
+						/>
+					)}
 
-					<ColumnGroup>
-						<LabeledCard label='Speedy'>
-							<CardValue
-								label='Spawn'
-								value='lvl 30+'
-							/>
-						</LabeledCard>
-					</ColumnGroup>
-				</div>
-			</PageContent>
-		</>
+					{mobDetails.tiers?.length && (
+						<MobVariants
+							title='Tiers'
+							list={mobDetails.tiers}
+						/>
+					)}
+
+					{mobDetails.special?.length && (
+						<MobVariants
+							title='Special'
+							list={mobDetails.special}
+						/>
+					)}
+				</PageContent>
+			</>
+		)
 	);
 };
 

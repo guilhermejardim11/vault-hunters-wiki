@@ -1,13 +1,14 @@
 import { useEffect, useReducer, useState } from 'react';
 
-import PageTitle from '../../../components/page/PageTitle';
-import ColumnGroup from '../../../components/ui/card/ColumnGroup';
-import Search from '../../../components/ui/Search';
-import PageContent from '../../../components/page/PageContent';
-import MobGroup from '../../../components/mobs/MobGroup';
-import Loading from '../../../components/ui/Loading';
+import PageTitle from '../../components/page/PageTitle';
+import ColumnGroup from '../../components/ui/card/ColumnGroup';
+import Search from '../../components/ui/Search';
+import PageContent from '../../components/page/PageContent';
+import MobGroup from '../../components/mobs/MobGroup';
+import Loading from '../../components/ui/Loading';
+import ThemeGroup from '../../components/themes/ThemeGroup';
 
-const mobsFilter = (object, query) => {
+const themesFilter = (object, query) => {
 	const results = { ...object };
 
 	results = Object.keys(results)
@@ -19,7 +20,7 @@ const mobsFilter = (object, query) => {
 	return results;
 };
 
-const mobsReducer = (state, action) => {
+const themesReducer = (state, action) => {
 	switch (action.type) {
 		case 'FETCH':
 			return {
@@ -30,7 +31,7 @@ const mobsReducer = (state, action) => {
 		case 'FILTER':
 			return {
 				...state,
-				queried: mobsFilter(state.initial, action.query),
+				queried: themesFilter(state.initial, action.query),
 			};
 
 		default:
@@ -38,20 +39,20 @@ const mobsReducer = (state, action) => {
 	}
 };
 
-const MobsPage = () => {
+const ThemesPage = () => {
 	const [isLoading, setIsLoading] = useState(true);
 
-	const [mobs, dispatch] = useReducer(mobsReducer, {
+	const [themes, dispatch] = useReducer(themesReducer, {
 		initial: {},
 		queried: {},
 	});
 
 	useEffect(() => {
-		const fetchMobs = async () => {
+		const fetchThemes = async () => {
 			setIsLoading(true);
 
 			try {
-				const response = await fetch('https://vault-hunters-wiki-default-rtdb.firebaseio.com/mobs.json');
+				const response = await fetch('https://vault-hunters-wiki-default-rtdb.firebaseio.com/themes.json');
 				const data = await response.json();
 
 				if (!response.ok) {
@@ -64,30 +65,32 @@ const MobsPage = () => {
 			setIsLoading(false);
 		};
 
-		fetchMobs();
+		fetchThemes();
 	}, []);
 
 	const searchHandler = (event) => {
 		dispatch({ type: 'FILTER', query: event.target.value });
 	};
 
+	console.log(themes.queried);
+
 	return (
 		<>
-			<PageTitle>Mobs</PageTitle>
+			<PageTitle>Themes</PageTitle>
 
 			<ColumnGroup>
 				<Search
-					name='modifiers'
+					name='themes'
 					onChange={searchHandler}
 				/>
 			</ColumnGroup>
 
 			<PageContent>
-				{isLoading && <Loading message='Loading Mobs...' />}
-				{!isLoading && mobs.queried && <MobGroup mobs={mobs.queried} />}
+				{isLoading && <Loading message='Loading Themes...' />}
+				{!isLoading && themes.queried && <ThemeGroup themes={themes.queried} />}
 			</PageContent>
 		</>
 	);
 };
 
-export default MobsPage;
+export default ThemesPage;

@@ -2,7 +2,7 @@ import styles from './Layout.module.scss';
 
 import Header from './header/Header';
 import Footer from './footer/Footer';
-import Cookies from './Cookies';
+import Cookies from './cookies/Cookies';
 
 function Layout(props) {
 	return (

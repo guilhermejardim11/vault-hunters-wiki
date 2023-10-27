@@ -1,7 +1,7 @@
 import styles from './Header.module.scss';
 
 import HeaderLogo from './HeaderLogo';
-import Navigation from './Navigation';
+import Navigation from '../navigation/Navigation';
 
 const Header = () => {
 	return (

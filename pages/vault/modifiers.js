@@ -3,75 +3,74 @@ import { useEffect, useReducer, useState } from 'react';
 import PageTitle from '../../components/page/PageTitle';
 import ModifierGroup from '../../components/modifiers/ModifierGroup';
 import Search from '../../components/ui/Search';
-import PageContent from '../../components/layout/PageContent';
+import PageContent from '../../components/page/PageContent';
 import ColumnGroup from '../../components/ui/card/ColumnGroup';
+import Loading from '../../components/ui/Loading';
 
-const filterResults = (object, query) => {
+const modifiersFilter = (object, query) => {
 	const results = { ...object };
 
 	for (const group in results) {
-		results[group] = results[group].filter(({ title }) => {
-			return title.toLowerCase().includes(query.toLowerCase());
-		});
+		results[group] = Object.keys(results[group])
+			.filter((key) => results[group][key].title.toLowerCase().includes(query.toLowerCase()))
+			.reduce((cur, key) => {
+				return Object.assign(cur, { [key]: results[group][key] });
+			}, {});
 	}
 
 	return results;
 };
 
-function modifiersReducer(state, action) {
+const modifiersReducer = (state, action) => {
 	switch (action.type) {
 		case 'FETCH':
 			return {
-				modifiers: action.modifiers,
-				queriedModifiers: action.modifiers,
+				initial: action.data,
+				queried: action.data,
 			};
 
 		case 'FILTER':
 			return {
 				...state,
-				queriedModifiers: filterResults(state.modifiers, action.query),
+				queried: modifiersFilter(state.initial, action.query),
 			};
 
 		default:
 			return state;
 	}
-}
+};
 
 const ModifiersPage = () => {
 	const [isLoading, setIsLoading] = useState(true);
-	const [error, setError] = useState('');
 
-	const [modifiers, dispatchModifiers] = useReducer(modifiersReducer, {
-		initialModifiers: {},
-		queriedModifiers: {},
+	const [modifiers, dispatch] = useReducer(modifiersReducer, {
+		initial: {},
+		queried: {},
 	});
-	const { queriedModifiers, query } = modifiers;
-
-	const fetchModifiers = async () => {
-		setIsLoading(true);
-
-		try {
-			const response = await fetch('https://vault-hunters-wiki-default-rtdb.firebaseio.com/modifiers.json');
-			const data = await response.json();
-
-			if (!response.ok) {
-				throw new Error({ message: 'Error' });
-			}
-
-			dispatchModifiers({ type: 'FETCH', modifiers: data });
-		} catch (error) {
-			setError(error.message);
-		}
-
-		setIsLoading(false);
-	};
 
 	useEffect(() => {
+		const fetchModifiers = async () => {
+			setIsLoading(true);
+
+			try {
+				const response = await fetch('https://vault-hunters-wiki-default-rtdb.firebaseio.com/modifiers.json');
+				const data = await response.json();
+
+				if (!response.ok) {
+					throw new Error({ message: 'Error' });
+				}
+
+				dispatch({ type: 'FETCH', data: data });
+			} catch (error) {}
+
+			setIsLoading(false);
+		};
+
 		fetchModifiers();
 	}, []);
 
 	const searchHandler = (event) => {
-		dispatchModifiers({ type: 'FILTER', query: event.target.value });
+		dispatch({ type: 'FILTER', query: event.target.value });
 	};
 
 	return (
@@ -81,32 +80,41 @@ const ModifiersPage = () => {
 			<ColumnGroup>
 				<Search
 					name='modifiers'
-					value={query}
 					onChange={searchHandler}
 				/>
 			</ColumnGroup>
 
 			<PageContent>
-				{isLoading && <p>Loading...</p>}
-
-				{!isLoading && error && (
+				{isLoading && <Loading message='Loading Mobs...' />}
+				{!isLoading && (
 					<>
-						<h3>Error</h3>
-						<p>{error}</p>
-					</>
-				)}
+						{Object.keys(modifiers.queried.positive).length > 0 && (
+							<ModifierGroup
+								title='Positive'
+								modifiers={modifiers.queried?.positive}
+							/>
+						)}
 
-				{!isLoading && queriedModifiers && (
-					<>
-						<ModifierGroup
-							title='Positive'
-							modifiers={queriedModifiers?.positive}
-						/>
+						{Object.keys(modifiers.queried.negative).length > 0 && (
+							<ModifierGroup
+								title='Negative'
+								modifiers={modifiers.queried.negative}
+							/>
+						)}
 
-						<ModifierGroup
-							title='Negative'
-							modifiers={queriedModifiers?.negative}
-						/>
+						{Object.keys(modifiers.queried.curses).length > 0 && (
+							<ModifierGroup
+								title='Curses'
+								modifiers={modifiers.queried.curses}
+							/>
+						)}
+
+						{Object.keys(modifiers.queried.uber).length > 0 && (
+							<ModifierGroup
+								title='Uber/Special'
+								modifiers={modifiers.queried.uber}
+							/>
+						)}
 					</>
 				)}
 			</PageContent>

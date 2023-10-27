@@ -18,30 +18,30 @@ function Navigation() {
 								label: 'Themes',
 								href: '/themes',
 							},
-							{
-								label: 'Objectives',
-								href: '/objectives',
-							},
+							// {
+							// 	label: 'Objectives',
+							// 	href: '/objectives',
+							// },
 							{
 								label: 'Modifiers',
 								href: '/modifiers',
 							},
-							{
-								label: 'Rooms',
-								href: '/rooms',
-							},
+							// {
+							// 	label: 'Rooms',
+							// 	href: '/rooms',
+							// },
 							{
 								label: 'Mobs',
 								href: '/mobs',
 							},
-							{
-								label: 'Altar Ingredients',
-								href: '/ingredients',
-							},
+							// {
+							// 	label: 'Altar Ingredients',
+							// 	href: '/ingredients',
+							// },
 						]}
 					/>
 				</li>
-				<li>
+				{/* <li>
 					<Link href='/loot'>Loot</Link>
 				</li>
 				<li>
@@ -55,7 +55,7 @@ function Navigation() {
 				</li>
 				<li>
 					<Link href='/other'>Other</Link>
-				</li>
+				</li> */}
 				<li>
 					<Button href='https://vaulthunters.gg/how-to-play'>Play Now</Button>
 				</li>
