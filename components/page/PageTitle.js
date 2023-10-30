@@ -1,12 +1,12 @@
 import styles from './PageTitle.module.scss';
 
-import Breadcrumbs from '../ui/Breadcrumbs';
+import Breadcrumbs from '../breadcrumbs/Breadcrumbs';
 
 const PageTitle = (props) => {
 	return (
-		<div className={styles.page_title}>
+		<div className={styles.title}>
 			<Breadcrumbs />
-			<h1 className={styles.title}>{props.children}</h1>
+			<h1>{props.children}</h1>
 		</div>
 	);
 };

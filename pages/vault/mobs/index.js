@@ -1,11 +1,11 @@
 import { useEffect, useReducer, useState } from 'react';
 
 import PageTitle from '../../../components/page/PageTitle';
-import ColumnGroup from '../../../components/ui/card/ColumnGroup';
-import Search from '../../../components/ui/Search';
 import PageContent from '../../../components/page/PageContent';
-import MobGroup from '../../../components/mobs/MobGroup';
 import Loading from '../../../components/ui/Loading';
+import Search from '../../../components/search/Search';
+import Columns from '../../../components/layout/Columns';
+import MobGroup from '../../../components/mob/MobGroup';
 
 const mobsFilter = (object, query) => {
 	const results = { ...object };
@@ -75,17 +75,14 @@ const MobsPage = () => {
 		<>
 			<PageTitle>Mobs</PageTitle>
 
-			<ColumnGroup>
+			<Columns>
 				<Search
 					name='modifiers'
 					onChange={searchHandler}
 				/>
-			</ColumnGroup>
+			</Columns>
 
-			<PageContent>
-				{isLoading && <Loading message='Loading Mobs...' />}
-				{!isLoading && mobs.queried && <MobGroup mobs={mobs.queried} />}
-			</PageContent>
+			<PageContent>{isLoading ? <Loading message='Loading Mobs...' /> : mobs.queried && <MobGroup mobs={mobs.queried} />}</PageContent>
 		</>
 	);
 };

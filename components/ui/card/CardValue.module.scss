@@ -1,7 +1,7 @@
 .card_value {
 	display: flex;
 	flex-direction: column;
-	gap: 3px;
+	gap: 4px;
 }
 
 .card_value__label {
@@ -10,7 +10,6 @@
 }
 
 .card_value__value {
-	font-size: 28px;
+	font-size: 20px;
 	font-weight: 600;
-	color: #f8b11b;
 }

@@ -1,0 +1,15 @@
+.theme {
+	cursor: pointer;
+	transition: transform 0.3s;
+
+	&:hover {
+		transform: scale(1.05);
+	}
+
+	img {
+		margin: -14px 0 -6px;
+		width: calc(100% + 28px);
+		aspect-ratio: 1.3;
+		object-fit: cover;
+	}
+}

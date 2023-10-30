@@ -1,10 +1,10 @@
 import styles from './Layout.module.scss';
 
-import Header from './header/Header';
-import Footer from './footer/Footer';
-import Cookies from './cookies/Cookies';
+import Header from '../header/Header';
+import Footer from '../footer/Footer';
+import Cookies from '../cookies/Cookies';
 
-function Layout(props) {
+const Layout = (props) => {
 	return (
 		<>
 			<div className={styles.background}>
@@ -15,6 +15,6 @@ function Layout(props) {
 			<Cookies />
 		</>
 	);
-}
+};
 
 export default Layout;

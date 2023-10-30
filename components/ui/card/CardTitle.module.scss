@@ -1,0 +1,9 @@
+.title {
+	margin-top: 12px;
+	font-size: 22px;
+	color: #f8b11b;
+
+	&:not(:last-child) {
+		margin-bottom: 6px;
+	}
+}

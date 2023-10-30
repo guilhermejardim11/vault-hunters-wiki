@@ -1,15 +1,14 @@
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 
-import MobDetailsGrid from '../../../components/details/mob/MobDetailsGrid';
 import PageTitle from '../../../components/page/PageTitle';
-import ColumnGroup from '../../../components/ui/card/ColumnGroup';
 import PageContent from '../../../components/page/PageContent';
-import ScavDropCard from '../../../components/mobs/ScavDropCard';
-import SoulChardCard from '../../../components/mobs/SoulChardCard';
-import MobVariants from '../../../components/mobs/MobVariants';
-import XPCard from '../../../components/mobs/XPCard';
-import SpawnCard from '../../../components/mobs/SpawnCard';
+import Columns from '../../../components/layout/Columns';
+import ScavDropCard from '../../../components/mob/details/ScavDropCard';
+import SpawnCard from '../../../components/mob/details/SpawnCard';
+import XPCard from '../../../components/mob/details/XPCard';
+import SoulChardCard from '../../../components/mob/details/SoulChardCard';
+import MobVariants from '../../../components/mob/details/MobVariants';
 
 const MobDetailsPage = () => {
 	const router = useRouter();
@@ -89,12 +88,12 @@ const MobDetailsPage = () => {
 						knockback_resistance='2-20'
 					/> */}
 
-					<ColumnGroup>
+					<Columns>
 						{mobDetails.scav_drop && <ScavDropCard essence={mobDetails.scav_drop} />}
 						{mobDetails.spawn && <SpawnCard spawn={mobDetails.spawn} />}
 						{mobDetails.xp && <XPCard xp={mobDetails.xp} />}
 						{mobDetails.soul_shards.amount && <SoulChardCard soul_shards={mobDetails.soul_shards} />}
-					</ColumnGroup>
+					</Columns>
 				</div>
 
 				<PageContent>

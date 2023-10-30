@@ -1,0 +1,47 @@
+.footer {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	margin-top: 50px;
+	border-right: 38px solid transparent;
+	border-left: 38px solid transparent;
+	padding: 50px calc((100% - 1280px) / 2);
+	background-color: rgba($color: #0b0a18, $alpha: 0.95);
+}
+
+.socials {
+	display: flex;
+	align-items: center;
+	gap: 20px;
+    font-size: 18px;
+
+	ul {
+		display: flex;
+		flex-direction: column;
+		gap: 6px;
+	}
+}
+
+.version {
+	display: flex;
+	flex-direction: column;
+	gap: 12px;
+	text-align: right;
+}
+
+.version__name {
+	font-size: 27px;
+	font-weight: 600;
+	line-height: 0.5;
+	color: #f8b11b;
+}
+
+.version__desc {
+	font-size: 19px;
+}
+
+.version__actions {
+	display: flex;
+	justify-content: flex-end;
+	gap: 8px;
+}
