@@ -8,10 +8,7 @@ import Card from '../../ui/card/Card';
 import CardTitle from '../../ui/card/CardTitle';
 
 const ScavDropCard = (props) => {
-	const essence = {
-		name: '',
-		icon: '',
-	};
+	let essence;
 
 	switch (props.essence) {
 		case 'black':
@@ -36,6 +33,10 @@ const ScavDropCard = (props) => {
 			break;
 
 		default:
+			essence = {
+				name: '',
+				icon: '',
+			};
 			break;
 	}
 

@@ -1,6 +1,8 @@
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 
+import { mobs } from '../../../database';
+
 import PageTitle from '../../../components/page/PageTitle';
 import PageContent from '../../../components/page/PageContent';
 import Columns from '../../../components/layout/Columns';
@@ -28,58 +30,39 @@ const MobDetailsPage = () => {
 		tiers: [],
 		special: [],
 	});
-	const [isLoading, setIsLoading] = useState(true);
 
 	useEffect(() => {
 		if (!router.query.id) {
 			return;
 		}
 
-		const fetchMob = async () => {
-			setIsLoading(true);
+		const data = mobs[router.query.id];
 
-			try {
-				const response = await fetch(`https://vault-hunters-wiki-default-rtdb.firebaseio.com/mobs/${router.query.id}.json`);
-				const data = await response.json();
-
-				if (!response.ok) {
-					throw new Error({ message: 'Error' });
-				}
-
-				setMobDetails((prevState) => ({
-					name: data.name && data.name,
-					xp: data.xp && data.xp,
-					spawn: data.spawn && data.spawn,
-					desc: data.desc && data.desc,
-					icon: data.icon && data.icon,
-					scav_drop: data.scav_drop && data.scav_drop,
-					soul_shards: {
-						amount: data.soul_shards?.amount,
-						odds: data.soul_shards?.odds,
-					},
-					variants: data.variants && data.variants,
-					tiers: data.tiers && data.tiers,
-					special: data.special && data.special,
-				}));
-			} catch (error) {
-				// setError(error.message);
-			}
-
-			setIsLoading(false);
-		};
-
-		fetchMob();
+		setMobDetails((prevState) => ({
+			name: data.name && data.name,
+			xp: data.xp && data.xp,
+			spawn: data.spawn && data.spawn,
+			desc: data.desc && data.desc,
+			icon: data.icon && data.icon,
+			scav_drop: data.scav_drop && data.scav_drop,
+			soul_shards: {
+				amount: data.soul_shards?.amount,
+				odds: data.soul_shards?.odds,
+			},
+			variants: data.variants && data.variants,
+			tiers: data.tiers && data.tiers,
+			special: data.special && data.special,
+		}));
 	}, [router.query.id]);
 
 	return (
-		!isLoading && (
-			<>
-				<PageTitle>{mobDetails.name}</PageTitle>
+		<>
+			<PageTitle>{mobDetails.name}</PageTitle>
 
-				<div>
-					<p>{mobDetails.desc}</p>
+			<div>
+				<p>{mobDetails.desc}</p>
 
-					{/* <MobDetailsGrid
+				{/* <MobDetailsGrid
 						damage='1-3'
 						critical_chance='20%'
 						max_health='2-20'
@@ -88,38 +71,37 @@ const MobDetailsPage = () => {
 						knockback_resistance='2-20'
 					/> */}
 
-					<Columns>
-						{mobDetails.scav_drop && <ScavDropCard essence={mobDetails.scav_drop} />}
-						{mobDetails.spawn && <SpawnCard spawn={mobDetails.spawn} />}
-						{mobDetails.xp && <XPCard xp={mobDetails.xp} />}
-						{mobDetails.soul_shards.amount && <SoulChardCard soul_shards={mobDetails.soul_shards} />}
-					</Columns>
-				</div>
+				<Columns>
+					{mobDetails.scav_drop && <ScavDropCard essence={mobDetails.scav_drop} />}
+					{mobDetails.spawn && <SpawnCard spawn={mobDetails.spawn} />}
+					{mobDetails.xp && <XPCard xp={mobDetails.xp} />}
+					{mobDetails.soul_shards.amount && <SoulChardCard soul_shards={mobDetails.soul_shards} />}
+				</Columns>
+			</div>
 
-				<PageContent>
-					{mobDetails.variants?.length && (
-						<MobVariants
-							title='Variants'
-							list={mobDetails.variants}
-						/>
-					)}
+			<PageContent>
+				{mobDetails.variants?.length && (
+					<MobVariants
+						title='Variants'
+						list={mobDetails.variants}
+					/>
+				)}
 
-					{mobDetails.tiers?.length && (
-						<MobVariants
-							title='Tiers'
-							list={mobDetails.tiers}
-						/>
-					)}
+				{mobDetails.tiers?.length && (
+					<MobVariants
+						title='Tiers'
+						list={mobDetails.tiers}
+					/>
+				)}
 
-					{mobDetails.special?.length && (
-						<MobVariants
-							title='Special'
-							list={mobDetails.special}
-						/>
-					)}
-				</PageContent>
-			</>
-		)
+				{mobDetails.special?.length && (
+					<MobVariants
+						title='Special'
+						list={mobDetails.special}
+					/>
+				)}
+			</PageContent>
+		</>
 	);
 };
 

@@ -1,8 +1,9 @@
-import { useEffect, useReducer, useState } from 'react';
+import { useEffect, useReducer } from 'react';
+
+import { mobs } from '../../../database';
 
 import PageTitle from '../../../components/page/PageTitle';
 import PageContent from '../../../components/page/PageContent';
-import Loading from '../../../components/ui/Loading';
 import Search from '../../../components/search/Search';
 import Columns from '../../../components/layout/Columns';
 import MobGroup from '../../../components/mob/MobGroup';
@@ -39,32 +40,13 @@ const mobsReducer = (state, action) => {
 };
 
 const MobsPage = () => {
-	const [isLoading, setIsLoading] = useState(true);
-
-	const [mobs, dispatch] = useReducer(mobsReducer, {
+	const [mobList, dispatch] = useReducer(mobsReducer, {
 		initial: {},
 		queried: {},
 	});
 
 	useEffect(() => {
-		const fetchMobs = async () => {
-			setIsLoading(true);
-
-			try {
-				const response = await fetch('https://vault-hunters-wiki-default-rtdb.firebaseio.com/mobs.json');
-				const data = await response.json();
-
-				if (!response.ok) {
-					throw new Error({ message: 'Error' });
-				}
-
-				dispatch({ type: 'FETCH', data: data });
-			} catch (error) {}
-
-			setIsLoading(false);
-		};
-
-		fetchMobs();
+		dispatch({ type: 'FETCH', data: mobs });
 	}, []);
 
 	const searchHandler = (event) => {
@@ -82,7 +64,9 @@ const MobsPage = () => {
 				/>
 			</Columns>
 
-			<PageContent>{isLoading ? <Loading message='Loading Mobs...' /> : mobs.queried && <MobGroup mobs={mobs.queried} />}</PageContent>
+			<PageContent>
+				<MobGroup mobs={mobList.queried} />
+			</PageContent>
 		</>
 	);
 };

@@ -1,10 +1,11 @@
-import { useEffect, useReducer, useState } from 'react';
+import { useEffect, useReducer } from 'react';
+
+import { themes } from '../../../database';
 
 import PageTitle from '../../../components/page/PageTitle';
 import PageContent from '../../../components/page/PageContent';
 import Columns from '../../../components/layout/Columns';
 import Search from '../../../components/search/Search';
-import Loading from '../../../components/ui/Loading';
 import ThemeGroup from '../../../components/theme/ThemeGroup';
 
 const themesFormat = (object) => {
@@ -57,32 +58,13 @@ const themesReducer = (state, action) => {
 };
 
 const ThemesPage = () => {
-	const [isLoading, setIsLoading] = useState(true);
-
-	const [themes, dispatch] = useReducer(themesReducer, {
+	const [themeList, dispatch] = useReducer(themesReducer, {
 		initial: {},
 		queried: {},
 	});
 
 	useEffect(() => {
-		const fetchThemes = async () => {
-			setIsLoading(true);
-
-			try {
-				const response = await fetch('https://vault-hunters-wiki-default-rtdb.firebaseio.com/themes.json');
-				const data = await response.json();
-
-				if (!response.ok) {
-					throw new Error({ message: 'Error' });
-				}
-
-				dispatch({ type: 'FETCH', data: data });
-			} catch (error) {}
-
-			setIsLoading(false);
-		};
-
-		fetchThemes();
+		dispatch({ type: 'FETCH', data: themes });
 	}, []);
 
 	const searchHandler = (event) => {
@@ -101,43 +83,29 @@ const ThemesPage = () => {
 			</Columns>
 
 			<PageContent>
-				{isLoading ? (
-					<Loading message='Loading Themes...' />
-				) : (
-					<>
-						{Object.keys(themes.queried.normal).length > 0 && (
-							<ThemeGroup
-								title='Normal'
-								category='normal'
-								themes={themes.queried.normal}
-							/>
-						)}
+				<ThemeGroup
+					title='Normal'
+					category='normal'
+					themes={themeList.queried.normal}
+				/>
 
-						{Object.keys(themes.queried.festive).length > 0 && (
-							<ThemeGroup
-								title='Festive'
-								category='festive'
-								themes={themes.queried.festive}
-							/>
-						)}
+				<ThemeGroup
+					title='Festive'
+					category='festive'
+					themes={themeList.queried.festive}
+				/>
 
-						{Object.keys(themes.queried.seal_architect).length > 0 && (
-							<ThemeGroup
-								title='Seal of the Architect'
-								category='seal_architect'
-								themes={themes.queried.seal_architect}
-							/>
-						)}
+				<ThemeGroup
+					title='Seal of the Architect'
+					category='seal_architect'
+					themes={themeList.queried.seal_architect}
+				/>
 
-						{Object.keys(themes.queried.seal_challenger).length > 0 && (
-							<ThemeGroup
-								title='Seal of the Challenger'
-								category='seal_challenger'
-								themes={themes.queried.seal_challenger}
-							/>
-						)}
-					</>
-				)}
+				<ThemeGroup
+					title='Seal of the Challenger'
+					category='seal_challenger'
+					themes={themeList.queried.seal_challenger}
+				/>
 			</PageContent>
 		</>
 	);

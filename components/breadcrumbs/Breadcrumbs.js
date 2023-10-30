@@ -2,17 +2,9 @@ import { Fragment } from 'react';
 import { useRouter } from 'next/router';
 import Link from 'next/link';
 
+import { capitalizeWords } from '../../helper';
+
 import styles from './Breadcrumbs.module.scss';
-
-const CapitalizeWords = (text) => {
-	const words = text.replace('-', ' ').split(' ');
-
-	for (let i = 0; i < words.length; i++) {
-		words[i] = words[i][0].toUpperCase() + words[i].substr(1);
-	}
-
-	return words.join(' ');
-};
 
 const Breadcrumbs = () => {
 	const router = useRouter();
@@ -32,7 +24,7 @@ const Breadcrumbs = () => {
 				return (
 					<Fragment key={value}>
 						<span>●</span>
-						<Link href={href}>{CapitalizeWords(value)}</Link>
+						<Link href={href}>{capitalizeWords(value)}</Link>
 					</Fragment>
 				);
 			});
@@ -41,7 +33,6 @@ const Breadcrumbs = () => {
 
 	return (
 		<div className={styles.breadcrumbs}>
-			<span>{'<'}</span>
 			<Link href='/'>Home</Link>
 			{createBreadcrumbs()}
 		</div>
