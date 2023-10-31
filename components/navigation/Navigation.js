@@ -26,10 +26,10 @@ const Navigation = () => {
 								label: 'Modifiers',
 								href: '/modifiers',
 							},
-							// {
-							// 	label: 'Rooms',
-							// 	href: '/rooms',
-							// },
+							{
+								label: 'Rooms',
+								href: '/rooms',
+							},
 							{
 								label: 'Mobs',
 								href: '/mobs',

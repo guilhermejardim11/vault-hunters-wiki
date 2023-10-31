@@ -1,25 +1,22 @@
-import Link from 'next/link';
-
 import styles from './MobCard.module.scss';
 
-import Card from '../ui/card/Card';
+import ClickableCard from '../ui/card/ClickableCard';
 import CardTitle from '../ui/card/CardTitle';
 import PixelImg from '../ui/PixelImg';
 
 const MobCard = (props) => {
 	return (
-		<Link href={`/vault/mobs/${props.mob.id}`}>
-			<div className={styles.mob}>
-				<Card>
-					<PixelImg
-						src={props.mob.icon}
-						alt={props.mob.name}
-					/>
+		<ClickableCard
+			href={`/vault/mobs/${props.mob.id}`}
+			className={styles.mob}
+		>
+			<PixelImg
+				src={props.mob.icon}
+				alt={props.mob.name}
+			/>
 
-					<CardTitle>{props.mob.name}</CardTitle>
-				</Card>
-			</div>
-		</Link>
+			<CardTitle>{props.mob.name}</CardTitle>
+		</ClickableCard>
 	);
 };
 

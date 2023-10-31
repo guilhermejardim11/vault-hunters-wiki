@@ -8,6 +8,22 @@ import Columns from '../../../components/layout/Columns';
 import Search from '../../../components/search/Search';
 import ModifierGroup from '../../../components/modifier/ModifierGroup';
 
+const modifiersFormat = (object) => {
+	const results = {};
+
+	for (const id in object) {
+		const modifier = object[id];
+
+		if (!results.hasOwnProperty(modifier.category)) {
+			results[modifier.category] = {};
+		}
+
+		results[modifier.category][id] = modifier;
+	}
+
+	return results;
+};
+
 const modifiersFilter = (object, query) => {
 	const results = { ...object };
 
@@ -26,8 +42,8 @@ const modifiersReducer = (state, action) => {
 	switch (action.type) {
 		case 'FETCH':
 			return {
-				initial: action.data,
-				queried: action.data,
+				initial: modifiersFormat(action.data),
+				queried: modifiersFormat(action.data),
 			};
 
 		case 'FILTER':

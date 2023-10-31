@@ -255,6 +255,10 @@ b {
 	font-weight: 600;
 }
 
+p {
+	line-height: 28px;
+}
+
 h1,
 h2,
 h3,
@@ -285,4 +289,17 @@ a {
 
 a:hover {
 	color: #ffffff;
+}
+
+sub,
+sup {
+	font-size: 12px;
+    font-weight: 400 !important;
+	color: #f8b11b;
+}
+sub {
+	vertical-align: text-bottom;
+}
+sup {
+	vertical-align: text-top;
 }

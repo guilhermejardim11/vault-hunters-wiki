@@ -1,14 +1,14 @@
 import { useEffect, useReducer } from 'react';
 
-import { themes } from '../../../database';
+import { rooms } from '../../../database';
 
 import PageTitle from '../../../components/page/PageTitle';
 import PageContent from '../../../components/page/PageContent';
 import Columns from '../../../components/layout/Columns';
 import Search from '../../../components/search/Search';
-import ThemeGroup from '../../../components/theme/ThemeGroup';
+import RoomGroup from '../../../components/room/RoomGroup';
 
-const themesFormat = (object) => {
+const roomsFormat = (object) => {
 	const results = {};
 
 	for (const id in object) {
@@ -24,7 +24,7 @@ const themesFormat = (object) => {
 	return results;
 };
 
-const themesFilter = (object, query) => {
+const roomsFilter = (object, query) => {
 	const results = { ...object };
 
 	for (const group in results) {
@@ -38,18 +38,18 @@ const themesFilter = (object, query) => {
 	return results;
 };
 
-const themesReducer = (state, action) => {
+const roomsReducer = (state, action) => {
 	switch (action.type) {
 		case 'FETCH':
 			return {
-				initial: themesFormat(action.data),
-				queried: themesFormat(action.data),
+				initial: roomsFormat(action.data),
+				queried: roomsFormat(action.data),
 			};
 
 		case 'FILTER':
 			return {
 				...state,
-				queried: themesFilter(state.initial, action.query),
+				queried: roomsFilter(state.initial, action.query),
 			};
 
 		default:
@@ -57,14 +57,14 @@ const themesReducer = (state, action) => {
 	}
 };
 
-const ThemesPage = () => {
-	const [themeList, dispatch] = useReducer(themesReducer, {
+const RoomsPage = () => {
+	const [roomList, dispatch] = useReducer(roomsReducer, {
 		initial: {},
 		queried: {},
 	});
 
 	useEffect(() => {
-		dispatch({ type: 'FETCH', data: themes });
+		dispatch({ type: 'FETCH', data: rooms });
 	}, []);
 
 	const searchHandler = (event) => {
@@ -73,38 +73,28 @@ const ThemesPage = () => {
 
 	return (
 		<>
-			<PageTitle>Themes</PageTitle>
+			<PageTitle>Special Rooms</PageTitle>
 
 			<Columns>
 				<Search
-					name='themes'
+					name='rooms'
 					onChange={searchHandler}
 				/>
 			</Columns>
 
 			<PageContent>
-				<ThemeGroup
-					title='Normal'
-					themes={themeList.queried.normal}
+				<RoomGroup
+					title='Challenge Rooms (7%)'
+					rooms={roomList.queried.challenge}
 				/>
 
-				<ThemeGroup
-					title='Festive'
-					themes={themeList.queried.festive}
-				/>
-
-				<ThemeGroup
-					title='Seal of the Architect'
-					themes={themeList.queried.seal_architect}
-				/>
-
-				<ThemeGroup
-					title='Seal of the Challenger'
-					themes={themeList.queried.seal_challenger}
+				<RoomGroup
+					title='Omega Rooms (2%)'
+					rooms={roomList.queried.omega}
 				/>
 			</PageContent>
 		</>
 	);
 };
 
-export default ThemesPage;
+export default RoomsPage;

@@ -1,9 +1,7 @@
-import Columns from '../layout/Columns';
-import Card from '../ui/card/Card';
-import CardTitle from '../ui/card/CardTitle';
-import PixelImg from '../ui/PixelImg';
-
 import { jsonToArray } from '../../helper';
+
+import Columns from '../layout/Columns';
+import ModifierCard from './ModifierCard';
 
 const ModifierGroup = (props) => {
 	const modifierList = jsonToArray(props.modifiers);
@@ -14,20 +12,12 @@ const ModifierGroup = (props) => {
 				<h2>{props.title}</h2>
 
 				<Columns>
-					{modifierList.map((modifier) => {
-						return (
-							<Card key={modifier.id}>
-								<PixelImg
-									src={modifier.icon}
-									alt={modifier.title}
-								/>
-
-								<CardTitle>{modifier.title}</CardTitle>
-
-								<p>{modifier.desc}</p>
-							</Card>
-						);
-					})}
+					{modifierList.map((modifier) => (
+						<ModifierCard
+							key={modifier.id}
+							modifier={modifier}
+						/>
+					))}
 				</Columns>
 			</div>
 		)

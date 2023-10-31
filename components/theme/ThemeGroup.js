@@ -1,12 +1,7 @@
-import Link from 'next/link';
-
 import { jsonToArray } from '../../helper';
 
-import styles from './ThemeGroup.module.scss';
-
 import Columns from '../layout/Columns';
-import Card from '../ui/card/Card';
-import CardTitle from '../ui/card/CardTitle';
+import ThemeCard from './ThemeCard';
 
 const ThemeGroup = (props) => {
 	const themeList = jsonToArray(props.themes);
@@ -18,21 +13,10 @@ const ThemeGroup = (props) => {
 
 				<Columns>
 					{themeList.map((theme) => (
-						<Link
+						<ThemeCard
 							key={theme.id}
-							href={`/vault/themes/${theme.id}`}
-						>
-							<div className={styles.theme}>
-								<Card label={theme.name}>
-									<img
-										src={theme.image}
-										alt={theme.name}
-									/>
-
-									<CardTitle>{theme.name}</CardTitle>
-								</Card>
-							</div>
-						</Link>
+							theme={theme}
+						/>
 					))}
 				</Columns>
 			</div>
