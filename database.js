@@ -8,6 +8,8 @@ const mob_icons_quark = importAll(require.context('./assets/icons/mob_heads/quar
 const mob_icons_rottencreatures = importAll(require.context('./assets/icons/mob_heads/rottencreatures', false, /\.(png)$/));
 const mob_icons_the_vault = importAll(require.context('./assets/icons/mob_heads/the_vault', false, /\.(png)$/));
 const modifier_icons = importAll(require.context('./assets/icons/modifiers', false, /\.(png)$/));
+const objectives_icons = importAll(require.context('./assets/icons/objectives', false, /\.(png)$/));
+
 const theme_images = importAll(require.context('./assets/images/themes', false, /\.(png)$/));
 const rooms_images = importAll(require.context('./assets/images/rooms', false, /\.(png)$/));
 
@@ -913,6 +915,21 @@ export const rooms = {
 		variants: '1',
 		floors: '1',
 		loot: ['Coin Piles'],
+	},
+};
+
+export const experience = {
+	'cake-vault': {
+		name: 'Cake Vault',
+		category: 'objectives',
+		icon: objectives_icons['cake_vault.png'].default.src,
+		xp: '200/cake',
+	},
+	elixir: {
+		name: 'Elixir',
+		category: 'objectives',
+		icon: objectives_icons['elixir.png'].default.src,
+		xp: '9000',
 	},
 };
 

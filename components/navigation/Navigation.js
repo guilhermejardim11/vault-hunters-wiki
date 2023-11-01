@@ -31,6 +31,10 @@ const Navigation = () => {
 								href: '/rooms',
 							},
 							{
+								label: 'Experience',
+								href: '/experience',
+							},
+							{
 								label: 'Mobs',
 								href: '/mobs',
 							},
