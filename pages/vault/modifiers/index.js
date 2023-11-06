@@ -65,7 +65,7 @@ const ModifiersPage = () => {
 
 	useEffect(() => {
 		dispatch({ type: 'FETCH', data: modifiers });
-	}, []);
+	}, [modifiers]);
 
 	const searchHandler = (event) => {
 		dispatch({ type: 'FILTER', query: event.target.value });
@@ -75,14 +75,14 @@ const ModifiersPage = () => {
 		<>
 			<PageTitle>Modifiers</PageTitle>
 
-			<Columns>
-				<Search
-					name='modifiers'
-					onChange={searchHandler}
-				/>
-			</Columns>
-
 			<PageContent>
+				<Columns>
+					<Search
+						name='modifiers'
+						onChange={searchHandler}
+					/>
+				</Columns>
+
 				<ModifierGroup
 					title='Positive'
 					modifiers={modifierList.queried?.positive}

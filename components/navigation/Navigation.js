@@ -45,10 +45,19 @@ const Navigation = () => {
 						]}
 					/>
 				</li>
-				{/* <li>
-					<Link href='/loot'>Loot</Link>
-				</li>
 				<li>
+					<DropdownLink
+						label='Loot'
+						href='/loot'
+						links={[
+							{
+								label: 'Items',
+								href: '/items',
+							},
+						]}
+					/>
+				</li>
+				{/* <li>
 					<Link href='/gear'>Gear</Link>
 				</li>
 				<li>

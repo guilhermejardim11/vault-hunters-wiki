@@ -1,6 +1,6 @@
-import black_essence from '../../../assets/icons/items/scavenger/scavenger_mob_black.png';
-import green_essence from '../../../assets/icons/items/scavenger/scavenger_mob_green.png';
-import purple_essence from '../../../assets/icons/items/scavenger/scavenger_mob_purple.png';
+import black_essence from '../../../assets/icons/items/scavenger/black_mob_essence.png';
+import green_essence from '../../../assets/icons/items/scavenger/green_mob_essence.png';
+import purple_essence from '../../../assets/icons/items/scavenger/purple_mob_essence.png';
 
 import PixelImg from '../../ui/PixelImg';
 import Popover from '../../ui/Popover';

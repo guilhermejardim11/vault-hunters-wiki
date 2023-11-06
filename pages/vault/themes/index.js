@@ -65,7 +65,7 @@ const ThemesPage = () => {
 
 	useEffect(() => {
 		dispatch({ type: 'FETCH', data: themes });
-	}, []);
+	}, [themes]);
 
 	const searchHandler = (event) => {
 		dispatch({ type: 'FILTER', query: event.target.value });
@@ -75,14 +75,14 @@ const ThemesPage = () => {
 		<>
 			<PageTitle>Themes</PageTitle>
 
-			<Columns>
-				<Search
-					name='themes'
-					onChange={searchHandler}
-				/>
-			</Columns>
-
 			<PageContent>
+				<Columns>
+					<Search
+						name='themes'
+						onChange={searchHandler}
+					/>
+				</Columns>
+
 				<ThemeGroup
 					title='Normal'
 					themes={themeList.queried.normal}

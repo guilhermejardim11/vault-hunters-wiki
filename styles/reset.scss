@@ -257,6 +257,10 @@ b {
 
 p {
 	line-height: 28px;
+
+	&:not(:last-child) {
+		margin-bottom: 12px;
+	}
 }
 
 h1,
@@ -294,7 +298,7 @@ a:hover {
 sub,
 sup {
 	font-size: 12px;
-    font-weight: 400 !important;
+	font-weight: 400 !important;
 	color: #f8b11b;
 }
 sub {

@@ -65,7 +65,7 @@ const RoomsPage = () => {
 
 	useEffect(() => {
 		dispatch({ type: 'FETCH', data: rooms });
-	}, []);
+	}, [rooms]);
 
 	const searchHandler = (event) => {
 		dispatch({ type: 'FILTER', query: event.target.value });
@@ -75,14 +75,14 @@ const RoomsPage = () => {
 		<>
 			<PageTitle>Special Rooms</PageTitle>
 
-			<Columns>
-				<Search
-					name='rooms'
-					onChange={searchHandler}
-				/>
-			</Columns>
-
 			<PageContent>
+				<Columns>
+					<Search
+						name='rooms'
+						onChange={searchHandler}
+					/>
+				</Columns>
+
 				<RoomGroup
 					title='Challenge Rooms (7%)'
 					rooms={roomList.queried.challenge}

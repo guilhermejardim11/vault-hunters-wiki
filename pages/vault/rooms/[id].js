@@ -12,9 +12,12 @@ import VariantsCard from '../../../components/room/details/VariantsCard';
 import SpawnersCard from '../../../components/room/details/SpawnersCard';
 import FloorsCard from '../../../components/room/details/FloorsCard';
 import LootCard from '../../../components/room/details/LootCard';
+import PageContent from '../../../components/page/PageContent';
+import PageError from '../../../components/page/PageError';
 
 const RoomDetailsPage = () => {
 	const router = useRouter();
+	const { id } = router.query;
 
 	const [roomDetails, setRoomDetails] = useState({
 		name: '',
@@ -29,11 +32,12 @@ const RoomDetailsPage = () => {
 	});
 
 	useEffect(() => {
-		if (!router.query.id) {
+		if (!rooms.hasOwnProperty(id)) {
+			setRoomDetails(null);
 			return;
 		}
 
-		const data = rooms[router.query.id];
+		const data = rooms[id];
 
 		setRoomDetails((prevState) => ({
 			name: data.name && data.name,
@@ -46,20 +50,22 @@ const RoomDetailsPage = () => {
 			floors: data.floors && data.floors,
 			loot: data.loot && data.loot,
 		}));
-	}, [router.query.id]);
+	}, [rooms, id]);
 
-	return (
+	return roomDetails ? (
 		<>
 			<PageTitle>{roomDetails.name}</PageTitle>
 
 			<PageResume>
-				<p>{roomDetails.desc}</p>
-
 				<img
 					src={roomDetails.image}
 					alt={roomDetails.name}
 				/>
 
+				<p>{roomDetails.desc}</p>
+			</PageResume>
+
+			<PageContent>
 				<Columns>
 					{roomDetails.odds && <SpawnCard odds={roomDetails.odds} />}
 					{roomDetails.variants && <VariantsCard variants={roomDetails.variants} />}
@@ -67,7 +73,7 @@ const RoomDetailsPage = () => {
 					{roomDetails.floors && <FloorsCard floors={roomDetails.floors} />}
 					{roomDetails.loot.length > 0 && <LootCard loot={roomDetails.loot} />}
 				</Columns>
-			</PageResume>
+			</PageContent>
 
 			<PageFootnote>
 				<li>
@@ -75,6 +81,11 @@ const RoomDetailsPage = () => {
 				</li>
 			</PageFootnote>
 		</>
+	) : (
+		<PageError
+			type='room'
+			id={id}
+		/>
 	);
 };
 

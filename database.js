@@ -9,6 +9,8 @@ const mob_icons_rottencreatures = importAll(require.context('./assets/icons/mob_
 const mob_icons_the_vault = importAll(require.context('./assets/icons/mob_heads/the_vault', false, /\.(png)$/));
 const modifier_icons = importAll(require.context('./assets/icons/modifiers', false, /\.(png)$/));
 const objectives_icons = importAll(require.context('./assets/icons/objectives', false, /\.(png)$/));
+const items_icons = importAll(require.context('./assets/icons/items', false, /\.(png|gif)$/));
+const scav_items_icons = importAll(require.context('./assets/icons/items/scavenger', false, /\.(png)$/));
 
 const theme_images = importAll(require.context('./assets/images/themes', false, /\.(png)$/));
 const rooms_images = importAll(require.context('./assets/images/rooms', false, /\.(png)$/));
@@ -918,19 +920,115 @@ export const rooms = {
 	},
 };
 
-export const experience = {
+export const objectives = {
 	'cake-vault': {
 		name: 'Cake Vault',
-		category: 'objectives',
-		icon: objectives_icons['cake_vault.png'].default.src,
-		xp: '200/cake',
+		// icon: objectives_icons['cake_vault.png'].default.src,
 	},
 	elixir: {
 		name: 'Elixir',
-		category: 'objectives',
-		icon: objectives_icons['elixir.png'].default.src,
-		xp: '9000',
+		// icon: objectives_icons['elixir.png'].default.src,
 	},
+};
+
+export const blocks = {};
+
+export const items = {
+	the_vault: {
+		'gorginite-gem': {
+			name: 'Gorginite Gem',
+			icon: items_icons['gem_gorginite.gif'].default.src,
+		},
+		'iskallium-gem': {
+			name: 'Iskallium Gem',
+			icon: items_icons['gem_iskallium.gif'].default.src,
+		},
+		'iskallium-cluster': {
+			name: 'Iskallium Cluster',
+			icon: items_icons['cluster_iskallium.gif'].default.src,
+		},
+		'sparkletine-gem': {
+			name: 'Sparkletine Gem',
+			icon: items_icons['gem_sparkletine.gif'].default.src,
+		},
+		'bomignite-gem': {
+			name: 'Bomignite Gem',
+			icon: items_icons['gem_bomignite.png'].default.src,
+		},
+		'petezanite-gem': {
+			name: 'Petezanite Gem',
+			icon: items_icons['gem_petzanite.png'].default.src,
+		},
+		'tubium-gem': {
+			name: 'Tubium Gem',
+			icon: items_icons['gem_tubium.png'].default.src,
+		},
+		'upaline-gem': {
+			name: 'Upaline Gem',
+			icon: items_icons['gem_upaline.png'].default.src,
+		},
+		'xeenium-gem': {
+			name: 'Xeenium Gem',
+			icon: items_icons['gem_xenium.png'].default.src,
+		},
+		'ashium-gem': {
+			name: 'Ashium Gem',
+			icon: items_icons['gem_ashium.png'].default.src,
+		},
+		pog: {
+			name: 'POG',
+			desc: 'A POG is high tier crafting ingredient, used in several mid-game recipes. It can be crafted with 1 of each unique gems, as well as found in Treasure Sand from a Treasure Room and by killing Vault Champions.',
+			icon: items_icons['pog.gif'].default.src,
+		},
+		'black-mob-essence': {
+			name: 'Black Mob Essence',
+			desc: '',
+			category: 'scavenger',
+			icon: scav_items_icons['black_mob_essence.png'].default.src,
+		},
+		'blood-vial': {
+			name: 'Blood Vial',
+			desc: '',
+			category: 'scavenger',
+			icon: scav_items_icons['blood_vial.png'].default.src,
+		},
+		'cracked-pearl': {
+			name: 'Cracked Pearl',
+			desc: '',
+			category: 'scavenger',
+			icon: scav_items_icons['cracked_pearl.png'].default.src,
+		},
+	},
+};
+
+export const recipes = {
+	crafting: [
+		{
+			output: 'the_vault:pog',
+			input: [
+				['the_vault:gorginite-gem', 'the_vault:iskallium-gem', 'the_vault:sparkletine-gem'],
+				['the_vault:bomignite-gem', 'the_vault:petezanite-gem', 'the_vault:tubium-gem'],
+				['the_vault:upaline-gem', 'the_vault:xeenium-gem', 'the_vault:ashium-gem'],
+			],
+			info: ['shapeless'],
+		},
+		{
+			output: 'the_vault:iskallium-cluster',
+			input: [
+				['the_vault:iskallium-gem', 'the_vault:iskallium-gem', 'the_vault:iskallium-gem'],
+				['the_vault:iskallium-gem', 'the_vault:perfect-black-opal', 'the_vault:iskallium-gem'],
+				['the_vault:iskallium-gem', 'the_vault:iskallium-gem', 'the_vault:iskallium-gem'],
+			],
+		},
+	],
+	smelting: [
+		{
+			output: 'the_vault:iskallium-gem',
+			input: {
+				item: 'the_vault:iskallium-ore',
+			},
+		},
+	],
 };
 
 export const mobs = {
@@ -989,32 +1087,32 @@ export const mobs = {
 			amount: '1',
 			odds: '300',
 		},
-		tiers: [
-			{
+		tiers: {
+			1: {
 				icon: mob_icons_minecraft['creeper.png'].default.src,
 				name: 'Tier 1',
 				spawn: '0+',
 				xp: '48',
 			},
-			{
+			2: {
 				icon: mob_icons_the_vault['t1_creeper.png'].default.src,
 				name: 'Tier 2',
 				spawn: '20+',
 				xp: '60',
 			},
-			{
+			3: {
 				icon: mob_icons_the_vault['t2_creeper.png'].default.src,
 				name: 'Tier 3',
 				spawn: '50+',
 				xp: '80',
 			},
-			{
+			4: {
 				icon: mob_icons_the_vault['t3_creeper.png'].default.src,
 				name: 'Tier 4',
 				spawn: '65+',
 				xp: '100',
 			},
-		],
+		},
 	},
 	'dead-beard': {
 		icon: mob_icons_rottencreatures['dead_beard.png'].default.src,
@@ -1087,8 +1185,8 @@ export const mobs = {
 			amount: '1',
 			odds: '300',
 		},
-		special: [
-			{
+		special: {
+			elite: {
 				icon: mob_icons_the_vault['elite_drowned.png'].default.src,
 				name: 'Elite',
 				soul_shards: {
@@ -1096,7 +1194,7 @@ export const mobs = {
 					odds: '500',
 				},
 			},
-		],
+		},
 	},
 	enderman: {
 		icon: mob_icons_minecraft['enderman.png'].default.src,
@@ -1142,24 +1240,24 @@ export const mobs = {
 			amount: '1',
 			odds: '300',
 		},
-		variants: [
-			{
+		variants: {
+			blue: {
 				icon: mob_icons_the_vault['vault_blue_gummy_soldier.png'].default.src,
 				name: 'Blue',
 			},
-			{
+			green: {
 				icon: mob_icons_the_vault['vault_green_gummy_soldier.png'].default.src,
 				name: 'Green',
 			},
-			{
+			red: {
 				icon: mob_icons_the_vault['vault_red_gummy_soldier.png'].default.src,
 				name: 'Red',
 			},
-			{
+			yellow: {
 				icon: mob_icons_the_vault['vault_yellow_gummy_soldier.png'].default.src,
 				name: 'Yellow',
 			},
-		],
+		},
 	},
 	husk: {
 		icon: mob_icons_minecraft['husk.png'].default.src,
@@ -1169,8 +1267,8 @@ export const mobs = {
 			amount: '1',
 			odds: '300',
 		},
-		special: [
-			{
+		special: {
+			elite: {
 				icon: mob_icons_the_vault['elite_husk.png'].default.src,
 				name: 'Elite',
 				soul_shards: {
@@ -1178,35 +1276,30 @@ export const mobs = {
 					odds: '500',
 				},
 				spawn: '0+',
-				xp: '1400',
 			},
-		],
-		tiers: [
-			{
+		},
+		tiers: {
+			1: {
 				icon: mob_icons_minecraft['husk.png'].default.src,
 				name: 'Tier 1',
 				spawn: '0+',
-				xp: '12',
 			},
-			{
+			2: {
 				icon: mob_icons_the_vault['t1_husk.png'].default.src,
 				name: 'Tier 2',
 				spawn: '20+',
-				xp: '14',
 			},
-			{
+			3: {
 				icon: mob_icons_the_vault['t2_husk.png'].default.src,
 				name: 'Tier 3',
 				spawn: '50+',
-				xp: '32',
 			},
-			{
+			4: {
 				icon: mob_icons_the_vault['t3_husk.png'].default.src,
 				name: 'Tier 4',
 				spawn: '65+',
-				xp: '40',
 			},
-		],
+		},
 	},
 	'magma-cube': {
 		icon: mob_icons_minecraft['magma_cube.png'].default.src,
@@ -1338,8 +1431,8 @@ export const mobs = {
 		icon: mob_icons_minecraft['skeleton.png'].default.src,
 		name: 'Skeleton',
 		scav_drop: 'black',
-		special: [
-			{
+		special: {
+			elite: {
 				icon: mob_icons_the_vault['elite_skeleton.png'].default.src,
 				name: 'Elite',
 				soul_shards: {
@@ -1349,9 +1442,9 @@ export const mobs = {
 				spawn: '0+',
 				xp: '2600',
 			},
-		],
-		tiers: [
-			{
+		},
+		tiers: {
+			1: {
 				icon: mob_icons_minecraft['skeleton.png'].default.src,
 				name: 'Tier 1',
 				soul_shards: {
@@ -1361,7 +1454,7 @@ export const mobs = {
 				spawn: '0+',
 				xp: '24',
 			},
-			{
+			2: {
 				icon: mob_icons_the_vault['t1_skeleton.png'].default.src,
 				name: 'Tier 2',
 				soul_shards: {
@@ -1371,7 +1464,7 @@ export const mobs = {
 				spawn: '20+',
 				xp: '32',
 			},
-			{
+			3: {
 				icon: mob_icons_the_vault['t2_skeleton.png'].default.src,
 				name: 'Tier 3',
 				soul_shards: {
@@ -1381,7 +1474,7 @@ export const mobs = {
 				spawn: '50+',
 				xp: '48',
 			},
-			{
+			4: {
 				icon: mob_icons_the_vault['t3_skeleton.png'].default.src,
 				name: 'Tier 4',
 				soul_shards: {
@@ -1391,7 +1484,7 @@ export const mobs = {
 				spawn: '65+',
 				xp: '60',
 			},
-		],
+		},
 	},
 	'skeleton-pirate': {
 		icon: mob_icons_the_vault['skeleton_pirate_t0.png'].default.src,
@@ -1563,8 +1656,8 @@ export const mobs = {
 			amount: '1',
 			odds: '300',
 		},
-		special: [
-			{
+		special: {
+			elite: {
 				icon: mob_icons_the_vault['elite_zombie.png'].default.src,
 				name: 'Elite',
 				soul_shards: {
@@ -1573,32 +1666,194 @@ export const mobs = {
 				},
 				xp: '1400',
 			},
-		],
-		tiers: [
-			{
+		},
+		tiers: {
+			1: {
 				icon: mob_icons_minecraft['zombie.png'].default.src,
 				name: 'Normal',
 				spawn: '0+',
 				xp: '10',
 			},
-			{
+			2: {
 				icon: mob_icons_the_vault['t1_zombie.png'].default.src,
 				name: 'Tier 1',
 				spawn: '20+',
 				xp: '16',
 			},
-			{
+			3: {
 				icon: mob_icons_the_vault['t2_zombie.png'].default.src,
 				name: 'Tier 2',
 				spawn: '50+',
 				xp: '32',
 			},
-			{
+			4: {
 				icon: mob_icons_the_vault['t3_zombie.png'].default.src,
 				name: 'Tier 3',
 				spawn: '20+',
 				xp: '42',
 			},
-		],
+		},
+	},
+};
+
+export const experience = {
+	objectives: {
+		'cake-vault': '200/cake',
+		elixir: '9000',
+	},
+	mobs: {
+		'alligator-snapping-turtle': '32',
+		bunfungus: '60',
+		burned: '64',
+		creeper: {
+			1: '48',
+			2: '60',
+			3: '80',
+			4: '100',
+		},
+		'dead-beard': '80',
+		deathcap: '24',
+		'deep-dark-horror': '40',
+		'deep-dark-piglin': '32',
+		'deep-dark-silverfish': '16',
+		'deep-dark-skeleton': '24',
+		'deep-dark-zombie': '14',
+		drowned: {
+			1: '10',
+			2: '14',
+			3: '32',
+			4: '40',
+			elite: '1400',
+		},
+		enderman: {
+			1: '20',
+			2: '16',
+			3: '32',
+			4: '40',
+		},
+		foxhound: '28',
+		'glacial-hunter': '64',
+		husk: {
+			1: '12',
+			2: '14',
+			3: '32',
+			4: '40',
+			elite: '1400',
+		},
+		'magma-cube': '50',
+		'mantis-shrimp': '80',
+		'miner-zombie': {
+			1: '14',
+			2: '32',
+			3: '40',
+			4: '48',
+			5: '56',
+			6: '64',
+		},
+		mummy: {
+			1: '50',
+			2: '60',
+			3: '70',
+			rotten: '64',
+		},
+		mushroom: {
+			1: '12',
+			2: '18',
+			3: '24',
+			4: '32',
+			5: '40',
+			6: '48',
+		},
+		'overgrown-zombie': {
+			1: '12',
+			2: '18',
+			3: '24',
+			4: '32',
+			5: '40',
+			6: '48',
+		},
+		piglin: {
+			1: '16',
+			2: '14',
+			3: '32',
+			4: '40',
+		},
+		'piglin-brute': '64',
+		pillager: '28',
+		'polar-bear': '64',
+		ravenger: '90',
+		'rocky-roller': '80',
+		shiver: '70',
+		shulker: '40',
+		silverfish: '12',
+		skeleton: {
+			1: '24',
+			2: '32',
+			3: '48',
+			4: '60',
+			elite: '2600',
+		},
+		'skeleton-pirate': {
+			1: '20',
+			2: '28',
+			3: '36',
+			4: '44',
+			5: '52',
+			6: '64',
+		},
+		slime: '32',
+		snowdood: '24',
+		'soul-vulture': '72',
+		stray: {
+			1: '32',
+			2: '32',
+			3: '48',
+			4: '60',
+			elite: '2600',
+		},
+		swampy: '64',
+		tusklin: '70',
+		'undead-miner': '20',
+		'vault-fighter': {
+			1: '16',
+			2: '24',
+			3: '42',
+			4: '60',
+		},
+		'vault-guardian': '100',
+		'vault-spider': {
+			all: '24',
+			elite: '1800',
+		},
+		vindicator: '20',
+		'winter-walker': {
+			1: '14',
+			2: '32',
+			3: '40',
+			4: '48',
+			5: '60',
+			6: '80',
+		},
+		'winter-wolf': '48',
+		witch: {
+			all: '96',
+			elite: '2600',
+		},
+		'wither-skeleton': {
+			1: '32',
+			2: '32',
+			3: '48',
+			4: '60',
+			elite: '3000',
+		},
+		wraith: '32',
+		zombie: {
+			1: '10',
+			2: '16',
+			3: '32',
+			4: '42',
+			elite: '1400',
+		},
+		other: '12',
 	},
 };

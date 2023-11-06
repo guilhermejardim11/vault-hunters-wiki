@@ -3,6 +3,7 @@ import { useEffect, useReducer } from 'react';
 import { mobs } from '../../../database';
 
 import PageTitle from '../../../components/page/PageTitle';
+import PageResume from '../../../components/page/PageResume';
 import PageContent from '../../../components/page/PageContent';
 import Search from '../../../components/search/Search';
 import Columns from '../../../components/layout/Columns';
@@ -47,7 +48,7 @@ const MobsPage = () => {
 
 	useEffect(() => {
 		dispatch({ type: 'FETCH', data: mobs });
-	}, []);
+	}, [mobs]);
 
 	const searchHandler = (event) => {
 		dispatch({ type: 'FILTER', query: event.target.value });
@@ -57,14 +58,19 @@ const MobsPage = () => {
 		<>
 			<PageTitle>Mobs</PageTitle>
 
-			<Columns>
-				<Search
-					name='modifiers'
-					onChange={searchHandler}
-				/>
-			</Columns>
+			<PageResume>
+				<p>A variety of mobs appear inside the Vault, some only after a certain Vault Level. They can have different tiers, which make them stronger and harder, and this tiers start appearing at higher levels.</p>
+				<p>The health, damage, armor and weapons of the mobs all scale according to the Vault Level.</p>
+			</PageResume>
 
 			<PageContent>
+				<Columns>
+					<Search
+						name='mobs'
+						onChange={searchHandler}
+					/>
+				</Columns>
+
 				<MobGroup mobs={mobList.queried} />
 			</PageContent>
 		</>

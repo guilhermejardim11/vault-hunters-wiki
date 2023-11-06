@@ -1,10 +1,12 @@
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 
-import { mobs } from '../../../database';
+import { mobs, experience } from '../../../database';
 
 import PageTitle from '../../../components/page/PageTitle';
+import PageResume from '../../../components/page/PageResume';
 import PageContent from '../../../components/page/PageContent';
+import PageError from '../../../components/page/PageError';
 import Columns from '../../../components/layout/Columns';
 import ScavDropCard from '../../../components/mob/details/ScavDropCard';
 import SpawnCard from '../../../components/mob/details/SpawnCard';
@@ -14,36 +16,36 @@ import MobVariants from '../../../components/mob/details/MobVariants';
 
 const MobDetailsPage = () => {
 	const router = useRouter();
+	const { id } = router.query;
 
 	const [mobDetails, setMobDetails] = useState({
 		name: '',
-		xp: '',
-		spawn: '',
 		desc: '',
 		icon: '',
+		spawn: '',
 		scav_drop: '',
 		soul_shards: {
 			amount: '',
 			odds: '',
 		},
-		variants: [],
-		tiers: [],
-		special: [],
+		variants: {},
+		tiers: {},
+		special: {},
 	});
 
 	useEffect(() => {
-		if (!router.query.id) {
+		if (!mobs.hasOwnProperty(id)) {
+			setMobDetails(null);
 			return;
 		}
 
-		const data = mobs[router.query.id];
+		const data = mobs[id];
 
 		setMobDetails((prevState) => ({
 			name: data.name && data.name,
-			xp: data.xp && data.xp,
-			spawn: data.spawn && data.spawn,
 			desc: data.desc && data.desc,
 			icon: data.icon && data.icon,
+			spawn: data.spawn && data.spawn,
 			scav_drop: data.scav_drop && data.scav_drop,
 			soul_shards: {
 				amount: data.soul_shards?.amount,
@@ -53,55 +55,57 @@ const MobDetailsPage = () => {
 			tiers: data.tiers && data.tiers,
 			special: data.special && data.special,
 		}));
-	}, [router.query.id]);
+	}, [mobs, id]);
 
-	return (
+	return mobDetails ? (
 		<>
 			<PageTitle>{mobDetails.name}</PageTitle>
 
-			<div>
+			<PageResume>
 				<p>{mobDetails.desc}</p>
 
 				{/* <MobDetailsGrid
-						damage='1-3'
-						critical_chance='20%'
-						max_health='2-20'
-						critical_mult='2-20'
-						speed='2-20'
-						knockback_resistance='2-20'
-					/> */}
+					damage='1-3'
+					critical_chance='20%'
+					max_health='2-20'
+					critical_mult='2-20'
+					speed='2-20'
+					knockback_resistance='2-20'
+				/> */}
+			</PageResume>
 
+			<PageContent>
 				<Columns>
 					{mobDetails.scav_drop && <ScavDropCard essence={mobDetails.scav_drop} />}
 					{mobDetails.spawn && <SpawnCard spawn={mobDetails.spawn} />}
-					{mobDetails.xp && <XPCard xp={mobDetails.xp} />}
+					{experience.mobs.hasOwnProperty(id) && (typeof experience.mobs[id] !== 'object' || experience.mobs[id].hasOwnProperty('all')) && <XPCard xp={experience.mobs[id].hasOwnProperty('all') ? experience.mobs[id].all : experience.mobs[id]} />}
 					{mobDetails.soul_shards.amount && <SoulChardCard soul_shards={mobDetails.soul_shards} />}
 				</Columns>
-			</div>
 
-			<PageContent>
-				{mobDetails.variants?.length && (
-					<MobVariants
-						title='Variants'
-						list={mobDetails.variants}
-					/>
-				)}
+				<MobVariants
+					title='Variants'
+					mob={id}
+					list={mobDetails.variants}
+				/>
 
-				{mobDetails.tiers?.length && (
-					<MobVariants
-						title='Tiers'
-						list={mobDetails.tiers}
-					/>
-				)}
+				<MobVariants
+					title='Tiers'
+					mob={id}
+					list={mobDetails.tiers}
+				/>
 
-				{mobDetails.special?.length && (
-					<MobVariants
-						title='Special'
-						list={mobDetails.special}
-					/>
-				)}
+				<MobVariants
+					title='Special'
+					mob={id}
+					list={mobDetails.special}
+				/>
 			</PageContent>
 		</>
+	) : (
+		<PageError
+			type='mob'
+			id={id}
+		/>
 	);
 };
 

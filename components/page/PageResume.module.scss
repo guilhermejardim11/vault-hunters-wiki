@@ -1,3 +1,9 @@
-.resume > * {
-    margin-bottom: 28px;
+.resume {
+	&:not(:last-child) {
+		margin-bottom: 68px;
+	}
+
+	& > *:not(p):not(:last-child) {
+		margin-bottom: 38px;
+	}
 }

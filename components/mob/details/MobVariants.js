@@ -1,3 +1,5 @@
+import { experience } from '../../../database';
+
 import Columns from '../../layout/Columns';
 import Card from '../../ui/card/Card';
 import CardTitle from '../../ui/card/CardTitle';
@@ -6,51 +8,58 @@ import PixelImg from '../../ui/PixelImg';
 
 const MobVariants = (props) => {
 	return (
-		<div>
-			<h2>{props.title}</h2>
+		props.list &&
+		Object.keys(props.list).length > 0 && (
+			<div>
+				<h2>{props.title}</h2>
 
-			<Columns>
-				{props.list.map((item) => {
-					return (
-						<Card key={item.name}>
-							{item.icon && (
-								<PixelImg
-									src={item.icon}
-									alt={item.name}
-								/>
-							)}
+				<Columns>
+					{Object.keys(props.list).map((id) => {
+						const mob = props.list[id];
 
-							<CardTitle>{item.name}</CardTitle>
-
-							{item.spawn && (
-								<CardValue
-									label='Spawn'
-									value={`lvl ${item.spawn}`}
-								/>
-							)}
-							{item.xp && (
-								<CardValue
-									label='Experience'
-									value={`${item.xp}xp`}
-								/>
-							)}
-							{item.soul_shards && (
-								<>
-									<CardValue
-										label='Soul Shards Amount'
-										value={item.soul_shards.amount}
+						return (
+							<Card key={mob.name}>
+								{mob.icon && (
+									<PixelImg
+										src={mob.icon}
+										alt={mob.name}
 									/>
+								)}
+
+								<CardTitle>{mob.name}</CardTitle>
+
+								{mob.spawn && (
 									<CardValue
-										label='Soul Shards Odds'
-										value={`${item.soul_shards.odds}%`}
+										label='Spawn'
+										value={`lvl ${mob.spawn}`}
 									/>
-								</>
-							)}
-						</Card>
-					);
-				})}
-			</Columns>
-		</div>
+								)}
+
+								{experience.mobs.hasOwnProperty(props.mob) && experience.mobs[props.mob].hasOwnProperty(id) && (
+									<CardValue
+										label='Experience'
+										value={`${experience.mobs[props.mob][id]}xp`}
+									/>
+								)}
+
+								{mob.soul_shards && (
+									<>
+										<CardValue
+											label='Soul Shards Amount'
+											value={mob.soul_shards.amount}
+										/>
+										<CardValue
+											label='Soul Shards Odds'
+											value={`${mob.soul_shards.odds}%`}
+										/>
+									</>
+								)}
+							</Card>
+						);
+					})}
+				</Columns>
+			</div>
+		)
 	);
 };
 

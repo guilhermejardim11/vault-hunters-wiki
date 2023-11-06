@@ -1,6 +1,9 @@
 .content {
-    display: flex;
-    flex-direction: column;
-    gap: 68px;
-    margin-top: 68px;
+	display: flex;
+	flex-direction: column;
+	gap: 68px;
+
+	&:not(:last-child) {
+		margin-bottom: 68px;
+	}
 }

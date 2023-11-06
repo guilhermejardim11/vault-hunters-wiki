@@ -45,8 +45,8 @@ const ExperiencePage = () => {
 	});
 
 	useEffect(() => {
-		// dispatch({ type: 'FETCH', data: experience });
-	}, []);
+		dispatch({ type: 'FETCH', data: experience });
+	}, [experience]);
 
 	const searchHandler = (event) => {
 		dispatch({ type: 'FILTER', query: event.target.value });
@@ -56,14 +56,14 @@ const ExperiencePage = () => {
 		<>
 			<PageTitle>Experience</PageTitle>
 
-			<Columns>
-				<Search
-					name='experience'
-					onChange={searchHandler}
-				/>
-			</Columns>
-
-			<PageContent></PageContent>
+			<PageContent>
+				<Columns>
+					<Search
+						name='experience'
+						onChange={searchHandler}
+					/>
+				</Columns>
+			</PageContent>
 		</>
 	);
 };

@@ -1,0 +1,23 @@
+.toc {
+	&:not(:last-child) {
+		margin-bottom: 68px;
+	}
+
+	h2 {
+		margin-bottom: 12px;
+	}
+
+	ul {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 28px;
+
+		a {
+			color: #6d6ba2;
+
+			&:hover {
+				color: #ffffff;
+			}
+		}
+	}
+}
