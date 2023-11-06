@@ -88,10 +88,10 @@ const ItemsPage = () => {
 					/>
 				</Columns>
 
-				<ItemGroup items={itemList.queried.other} />
+				<ItemGroup list={itemList.queried.other} />
 				<ItemGroup
 					title='Scavenger'
-					items={itemList.queried.scavenger}
+					list={itemList.queried.scavenger}
 				/>
 			</PageContent>
 		</>

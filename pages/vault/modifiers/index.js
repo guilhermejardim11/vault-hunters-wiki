@@ -85,22 +85,22 @@ const ModifiersPage = () => {
 
 				<ModifierGroup
 					title='Positive'
-					modifiers={modifierList.queried?.positive}
+					list={modifierList.queried?.positive}
 				/>
 
 				<ModifierGroup
 					title='Negative'
-					modifiers={modifierList.queried.negative}
+					list={modifierList.queried.negative}
 				/>
 
 				<ModifierGroup
 					title='Curses'
-					modifiers={modifierList.queried.curses}
+					list={modifierList.queried.curses}
 				/>
 
 				<ModifierGroup
 					title='Uber/Special'
-					modifiers={modifierList.queried.uber}
+					list={modifierList.queried.uber}
 				/>
 			</PageContent>
 		</>

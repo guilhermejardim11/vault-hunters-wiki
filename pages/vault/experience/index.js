@@ -6,15 +6,19 @@ import PageTitle from '../../../components/page/PageTitle';
 import PageContent from '../../../components/page/PageContent';
 import Search from '../../../components/search/Search';
 import Columns from '../../../components/layout/Columns';
+import ExperienceGroup from '../../../components/experience/groups/ExperienceGroup';
+import ExperienceMobGroup from '../../../components/experience/groups/ExperienceMobGroup';
 
 const experienceFilter = (object, query) => {
 	const results = { ...object };
 
-	results = Object.keys(results)
-		.filter((key) => results[key].name.toLowerCase().includes(query.toLowerCase()))
-		.reduce((cur, key) => {
-			return Object.assign(cur, { [key]: results[key] });
-		}, {});
+	for (const group in results) {
+		results[group] = Object.keys(results[group])
+			.filter((key) => key.replace('-', ' ').toLowerCase().includes(query.toLowerCase()))
+			.reduce((cur, key) => {
+				return Object.assign(cur, { [key]: results[group][key] });
+			}, {});
+	}
 
 	return results;
 };
@@ -63,6 +67,16 @@ const ExperiencePage = () => {
 						onChange={searchHandler}
 					/>
 				</Columns>
+
+				{/* <ExperienceGroup
+					title='Objectives'
+					list={experienceList.queried.objectives}
+				/> */}
+
+				<ExperienceMobGroup
+					title='Mobs'
+					list={experienceList.queried.mobs}
+				/>
 			</PageContent>
 		</>
 	);

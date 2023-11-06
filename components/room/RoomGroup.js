@@ -4,7 +4,7 @@ import Columns from '../layout/Columns';
 import RoomCard from './RoomCard';
 
 const RoomGroup = (props) => {
-	const roomList = jsonToArray(props.rooms);
+	const roomList = jsonToArray(props.list);
 
 	return (
 		roomList.length > 0 && (

@@ -4,7 +4,7 @@ import Columns from '../layout/Columns';
 import ItemCard from './ItemCard';
 
 const ItemGroup = (props) => {
-	const itemList = jsonToArray(props.items);
+	const itemList = jsonToArray(props.list);
 
 	return (
 		itemList.length > 0 && (

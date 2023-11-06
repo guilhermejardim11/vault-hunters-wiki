@@ -71,7 +71,7 @@ const MobsPage = () => {
 					/>
 				</Columns>
 
-				<MobGroup mobs={mobList.queried} />
+				<MobGroup list={mobList.queried} />
 			</PageContent>
 		</>
 	);

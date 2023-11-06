@@ -4,7 +4,7 @@ import Columns from '../layout/Columns';
 import MobCard from './MobCard';
 
 const MobGroup = (props) => {
-	const mobList = jsonToArray(props.mobs);
+	const mobList = jsonToArray(props.list);
 
 	return (
 		<Columns>

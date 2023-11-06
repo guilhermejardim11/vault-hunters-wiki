@@ -85,22 +85,22 @@ const ThemesPage = () => {
 
 				<ThemeGroup
 					title='Normal'
-					themes={themeList.queried.normal}
+					list={themeList.queried.normal}
 				/>
 
 				<ThemeGroup
 					title='Festive'
-					themes={themeList.queried.festive}
+					list={themeList.queried.festive}
 				/>
 
 				<ThemeGroup
 					title='Seal of the Architect'
-					themes={themeList.queried.seal_architect}
+					list={themeList.queried.seal_architect}
 				/>
 
 				<ThemeGroup
 					title='Seal of the Challenger'
-					themes={themeList.queried.seal_challenger}
+					list={themeList.queried.seal_challenger}
 				/>
 			</PageContent>
 		</>

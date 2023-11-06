@@ -85,12 +85,12 @@ const RoomsPage = () => {
 
 				<RoomGroup
 					title='Challenge Rooms (7%)'
-					rooms={roomList.queried.challenge}
+					list={roomList.queried.challenge}
 				/>
 
 				<RoomGroup
 					title='Omega Rooms (2%)'
-					rooms={roomList.queried.omega}
+					list={roomList.queried.omega}
 				/>
 			</PageContent>
 		</>

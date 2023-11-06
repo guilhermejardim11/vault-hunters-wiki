@@ -4,7 +4,7 @@ import Columns from '../layout/Columns';
 import ModifierCard from './ModifierCard';
 
 const ModifierGroup = (props) => {
-	const modifierList = jsonToArray(props.modifiers);
+	const modifierList = jsonToArray(props.list);
 
 	return (
 		modifierList.length > 0 && (

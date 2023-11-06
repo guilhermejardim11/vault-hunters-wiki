@@ -4,7 +4,7 @@ import Columns from '../layout/Columns';
 import ThemeCard from './ThemeCard';
 
 const ThemeGroup = (props) => {
-	const themeList = jsonToArray(props.themes);
+	const themeList = jsonToArray(props.list);
 
 	return (
 		themeList.length > 0 && (
