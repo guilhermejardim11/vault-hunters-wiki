@@ -22,7 +22,7 @@ const ThemeDetailsPage = () => {
 
 	useEffect(() => {
 		if (!themes.hasOwnProperty(id)) {
-			setMobDetails(null);
+			setThemeDetails(null);
 			return;
 		}
 

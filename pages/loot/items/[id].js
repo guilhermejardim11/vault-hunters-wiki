@@ -21,17 +21,12 @@ const ItemDetailsPage = () => {
 	});
 
 	useEffect(() => {
-		if (!items.hasOwnProperty(id)) {
-			setMobDetails(null);
+		if (!items.the_vault.hasOwnProperty(id)) {
+			setItemDetails(null);
 			return;
 		}
 
 		const data = items.the_vault[id];
-
-		if (!data) {
-			setItemDetails(null);
-			return;
-		}
 
 		setItemDetails((prevState) => ({
 			name: data.name && data.name,
